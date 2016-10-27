@@ -1,5 +1,5 @@
 # Sipher-PHP-Ransomware
-This is a very minimal ransomware written in php which can be used to encrypt the webroot of any server with AES-256 twice
+This is a very minimal ransomware written in php which can be used to encrypt the webroot of any server with AES-256 twice(with two keys)
 
 #Encrypt
 To encrypt a website, upload the encrypt.php to the webserver, and then edit(with text editor) the 'invoker.html' and change the POST address to encrypt.php(which you uploaded)
