@@ -1,5 +1,5 @@
 <?php
-function encrypt_decrypt($action, $string, $secret_key, $secret_iv) {
+function encrypt_decrypt($action, $string, $secret_key, $secret_iv) { //Credits to some website which isn't up right now
     $output = false;
 
     $encrypt_method = "AES-256-CBC";
