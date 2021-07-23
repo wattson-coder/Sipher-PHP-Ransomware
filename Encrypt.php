@@ -1,5 +1,5 @@
 <?php
-function encrypt_decrypt($action, $string, $secret_key, $secret_iv) { //Credits to me
+function encrypt_decrypt($action, $string, $secret_key, $secret_iv) {
     $output = false;
 
     $encrypt_method = "AES-256-CBC";
@@ -15,7 +15,6 @@ function encrypt_decrypt($action, $string, $secret_key, $secret_iv) { //Credits 
         return openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
     }
 }
-
 function encfile($filename){
 	if (strpos($filename, '.aes.aes') !== false) {
     return;
